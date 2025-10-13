@@ -13,11 +13,12 @@ private:
   std::vector<DrawableObject*> drawableObjects_;
 
 public:
-  Scene(Camera* camera);
+  Scene(float aspectRatio);
   ~Scene();
   void SetShaders(Shader vertex_shader, Shader fragment_shader);
   void AddDrawableObject(DrawableObject* drawableObject);
   void Render();
+  Camera* GetCamera();
 };
 
 #endif

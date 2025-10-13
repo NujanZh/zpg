@@ -5,7 +5,7 @@ int main(void)
   Application* app = new Application();
   app->Initialization();
   app->CreateShaders();
-  app->CreateCreateModels();
+  app->CreateModels();
   app->Run();
   delete app;
   return 0;

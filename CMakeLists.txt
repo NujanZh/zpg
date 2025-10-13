@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(untitled_folder)
+project(zpg)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -32,6 +32,8 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         ../zpg_project/header/Subject.h
         ../zpg_project/Camera.cpp
         ../zpg_project/header/Camera.h
+        InputHandler.cpp
+        header/InputHandler.h
 )
 
 target_link_libraries(OpenGLProject

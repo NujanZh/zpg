@@ -1,12 +1,15 @@
 #include "header/Scene.h"
 
-Scene::Scene(Camera* camera) : shaderProgram_(nullptr), camera_(camera) {}
+Scene::Scene(float aspectRatio) : shaderProgram_(nullptr), camera_() {
+  camera_ = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, aspectRatio);
+}
 
 Scene::~Scene() {
   for (auto drawableObject : drawableObjects_) {
     delete drawableObject;
   }
   delete shaderProgram_;
+  delete camera_;
 }
 
 void Scene::AddDrawableObject(DrawableObject* drawableObject) {
@@ -35,4 +38,8 @@ void Scene::Render() {
   for (auto drawableObject : drawableObjects_) {
     drawableObject->Draw(shaderProgram_);
   }
+}
+
+Camera* Scene::GetCamera() {
+  return camera_;
 }
