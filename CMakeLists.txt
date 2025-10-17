@@ -34,6 +34,11 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         ../zpg_project/header/Camera.h
         InputHandler.cpp
         header/InputHandler.h
+        header/ShaderLoader.h
+        SceneManager.cpp
+        header/SceneManager.h
+        scenes/Forest.cpp
+        scenes/Forest.h
 )
 
 target_link_libraries(OpenGLProject

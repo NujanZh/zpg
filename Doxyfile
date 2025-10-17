@@ -1,0 +1,29 @@
+PROJECT_NAME           = "ZPG"
+OUTPUT_DIRECTORY       = docs
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+
+# CORE FEATURES
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+CLASS_DIAGRAMS         = YES
+CLASS_GRAPH            = YES
+UML_LOOK               = YES
+
+# INCLUDE YOUR EXACT STRUCTURE
+INPUT                  = . ../ *.cpp headers/
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h *.cpp
+
+# EXTRACT EVERYTHING
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+# PERFECT UML SETTINGS
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+UML_LIMIT_NUM_FIELDS   = 50
+
+EXCLUDE_SYMBOLS = main glm::vec3 glm::mat4 glm::vec2 GLFWwindow GLuint GLint GLboolean std::string std::vector

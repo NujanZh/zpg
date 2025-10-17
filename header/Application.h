@@ -1,11 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <GL/glew.h> // added because app crash, if glfw3 included before glew
+#include <GL/glew.h>  // added because app crash, if glfw3 included before glew
 #include <GLFW/glfw3.h>
-#include "Scene.h"
-#include "InputHandler.h"
 
+#include "../scenes/Forest.h"
+#include "InputHandler.h"
+#include "Scene.h"
+#include "SceneManager.h"
 
 class Application {
 private:
@@ -13,6 +15,7 @@ private:
   std::vector<Scene*> scenes_;
   int currentScene_;
   InputHandler* inputHandler_;
+  SceneManager* sceneManager_;
 
   static void errorCallback(int error, const char* description);
 

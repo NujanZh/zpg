@@ -1,8 +1,8 @@
 #include "header/InputHandler.h"
 #include <cstdio>
 
-InputHandler::InputHandler(Scene* scene)
-    : scene_(scene), firstMouse_(true), lastX_(0.0), lastY_(0.0) {}
+InputHandler::InputHandler(SceneManager* scene_manager)
+    : scene_manager_(scene_manager), firstMouse_(true), lastX_(0.0), lastY_(0.0) {}
 
 void InputHandler::SetupCallbacks(GLFWwindow* window) {
   glfwSetWindowUserPointer(window, this);
@@ -14,8 +14,8 @@ void InputHandler::SetupCallbacks(GLFWwindow* window) {
   glfwSetWindowSizeCallback(window, WindowSizeCallback);
 }
 
-void InputHandler::SetScene(Scene* scene) {
-  scene_ = scene;
+void InputHandler::SetSceneManager(SceneManager* sceneManager) {
+  scene_manager_ = sceneManager;
 }
 
 void InputHandler::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -31,9 +31,27 @@ void InputHandler::KeyCallback(GLFWwindow* window, int key, int scancode, int ac
 }
 
 void InputHandler::ProcessKeyInput(int key, int action) {
-  if (!scene_) return;
+  if (!scene_manager_) return;
 
-  Camera* camera = scene_->GetCamera();
+  if (action == GLFW_PRESS && scene_manager_) {
+    if (key == GLFW_KEY_1) {
+      scene_manager_->SwitchToScene(0);
+      return;
+    }
+    if (key == GLFW_KEY_2) {
+      scene_manager_->SwitchToScene(1);
+      return;
+    }
+    if (key == GLFW_KEY_3) {
+      scene_manager_->SwitchToScene(2);
+      return;
+    }
+  }
+
+  Scene* scene = scene_manager_->GetCurrentScene();
+  if (!scene) return;
+
+  Camera* camera = scene->GetCamera();
   if (!camera) return;
 
   const float deltaTime = 0.016f;
@@ -71,10 +89,13 @@ void InputHandler::ProcessMouseMovement(double x, double y) {
   lastX_ = x;
   lastY_ = y;
 
-  if (scene_) {
-    Camera* camera = scene_->GetCamera();
-    if (camera) {
-      camera->ProcessMouseMovement(xoffset, yoffset);
+  if (scene_manager_) {
+    Scene* scene = scene_manager_->GetCurrentScene();
+    if (scene) {
+      Camera* camera = scene->GetCamera();
+      if (camera) {
+        camera->ProcessMouseMovement(xoffset, yoffset);
+      }
     }
   }
 }
@@ -98,10 +119,13 @@ void InputHandler::WindowSizeCallback(GLFWwindow* window, int width, int height)
   glViewport(0, 0, width, height);
 
   InputHandler* handler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
-  if (handler && handler->scene_) {
-    Camera* camera = handler->scene_->GetCamera();
-    if (camera) {
-      camera->ProcessMouseScroll(0.0f);
+  if (handler && handler->scene_manager_) {
+    Scene* scene = handler->scene_manager_->GetCurrentScene();
+    if (scene) {
+      Camera* camera = scene->GetCamera();
+      if (camera) {
+        camera->ProcessMouseScroll(0.0f);
+      }
     }
   }
 }

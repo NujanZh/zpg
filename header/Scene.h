@@ -7,17 +7,18 @@
 #include "Shader.h"
 
 class Scene {
-private:
+protected:
   ShaderProgram* shaderProgram_;
   Camera* camera_;
   std::vector<DrawableObject*> drawableObjects_;
 
 public:
+  virtual void CreateModels() = 0;
+  virtual void Render() = 0;
   Scene(float aspectRatio);
-  ~Scene();
+  virtual ~Scene();
   void SetShaders(Shader vertex_shader, Shader fragment_shader);
   void AddDrawableObject(DrawableObject* drawableObject);
-  void Render();
   Camera* GetCamera();
 };
 

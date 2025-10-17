@@ -24,7 +24,6 @@ const float ZOOM = 45.0f;
 
 class Camera : public Subject {
 private:
-  // camera Attributes
   glm::vec3 position_;
   glm::vec3 front_;
   glm::vec3 up_;
@@ -32,17 +31,14 @@ private:
   glm::vec3 world_up_;
   glm::mat4 projection_;
   glm::mat4 view_;
-  // euler Angles
   float yaw_;
   float pitch_;
 
-  // camera options
   float movement_speed_;
   float mouse_sensitivity_;
   float zoom_;
 
   void UpdateCameraVectors() {
-    // calculate a new front vector
     glm::vec3 front;
     front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
     front.y = sin(glm::radians(pitch_));

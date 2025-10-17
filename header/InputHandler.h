@@ -4,11 +4,11 @@
 #include <GL/glew.h> // added because app crash, if glfw3 included before glew
 #include <GLFW/glfw3.h>
 
-#include "Scene.h"
+#include "SceneManager.h"
 
 class InputHandler {
 private:
-  Scene* scene_;
+  SceneManager* scene_manager_;
   bool firstMouse_;
   double lastX_;
   double lastY_;
@@ -16,10 +16,10 @@ private:
   void ProcessKeyInput(int key, int action);
   void ProcessMouseMovement(double x, double y);
 public:
-  InputHandler(Scene* scene);
+  InputHandler(SceneManager* sceneManager);
 
   void SetupCallbacks(GLFWwindow* window);
-  void SetScene(Scene* scene);
+  void SetSceneManager(SceneManager* sceneManager);
 
   static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
   static void CursorCallback(GLFWwindow* window, double x, double y);
@@ -28,6 +28,5 @@ public:
   static void WindowIconifyCallback(GLFWwindow* window, int iconified);
   static void WindowSizeCallback(GLFWwindow* window, int width, int height);
 };
-
 
 #endif

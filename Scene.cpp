@@ -28,18 +28,6 @@ void Scene::SetShaders(Shader vertex_shader, Shader fragment_shader) {
   }
 }
 
-void Scene::Render() {
-  if (!shaderProgram_) {
-    fprintf(stderr, "ERROR: Can't find shader program in Scene class!\n");
-    exit(EXIT_FAILURE);
-  }
-
-  shaderProgram_->SetShaderProgram();
-  for (auto drawableObject : drawableObjects_) {
-    drawableObject->Draw(shaderProgram_);
-  }
-}
-
 Camera* Scene::GetCamera() {
   return camera_;
 }
