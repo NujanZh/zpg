@@ -17,7 +17,6 @@ public:
   SceneManager(float aspectRatio);
   ~SceneManager();
   void CreateScenes();
-  void LoadShaders();
   void Render();
   void SwitchToScene(int sceneIndex);
   Scene* GetCurrentScene();

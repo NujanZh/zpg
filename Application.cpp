@@ -4,7 +4,7 @@
 
 #include "header/InputHandler.h"
 
-Application::Application() : window_(nullptr), currentScene_(0), inputHandler_(nullptr) {}
+Application::Application() : window_(nullptr), inputHandler_(nullptr) {}
 
 Application::~Application() {
   for (auto scene : scenes_) delete scene;
@@ -60,13 +60,6 @@ void Application::Initialization() {
   inputHandler_ = new InputHandler(sceneManager_);
   inputHandler_->SetupCallbacks(window_);
   sceneManager_->CreateScenes();
-}
-
-void Application::CreateShaders() {
-  sceneManager_->LoadShaders();
-}
-
-void Application::CreateModels() {
 }
 
 void Application::Run() {

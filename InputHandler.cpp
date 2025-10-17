@@ -54,7 +54,7 @@ void InputHandler::ProcessKeyInput(int key, int action) {
   Camera* camera = scene->GetCamera();
   if (!camera) return;
 
-  const float deltaTime = 0.016f;
+  const float deltaTime = 0.020f;
 
   if (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
     camera->ProcessKeyboard(Camera_Movement::FORWARD, deltaTime);

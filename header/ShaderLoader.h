@@ -14,7 +14,7 @@ public:
     std::ifstream file(kPath);
 
     if (!file.is_open()) {
-      fprintf(stderr, "Failed to open file %s\n", kPath.c_str());
+      fprintf(stderr, "ShaderLoader[LoadShader]: Failed to open file %s\n", kPath.c_str());
       exit(EXIT_FAILURE);
     }
 
@@ -29,7 +29,7 @@ public:
     std::string shaderSource = LoadShader(kPath);
 
     if (shaderSource.empty()) {
-      fprintf(stderr, "Shader source is empty in a file: %s\n", kPath.c_str());
+      fprintf(stderr, "ShaderLoader[CreateShaderFromFile]: Shader source is empty in a file: %s\n", kPath.c_str());
       exit(EXIT_FAILURE);
     }
 

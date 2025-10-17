@@ -13,9 +13,9 @@ void SceneManager::SetupShader(Scene* scene, const std::string& vertexShaderPath
 void SceneManager::SwitchToScene(int sceneIndex) {
   if (sceneIndex >= 0 && sceneIndex < scenes_.size()) {
     currentScene_ = sceneIndex;
-    printf("Switching to scene %d\n", sceneIndex);
+    printf("SceneManager[SwitchToScene]: Switching to scene %d\n", sceneIndex);
   } else {
-    printf("Scene %d is not exists\n", sceneIndex);
+    printf("SceneManager[SwitchToScene]: Scene %d is not exists\n", sceneIndex);
   }
 }
 
@@ -23,21 +23,28 @@ Scene* SceneManager::GetCurrentScene() {
   if (currentScene_ >= 0 && currentScene_ < scenes_.size()) {
     return scenes_[currentScene_];
   }
+  fprintf(stderr, "SceneManager[GetCurrentScene]: Scene %d is not exists\n", currentScene_);
   return nullptr;
 }
 
 void SceneManager::CreateScenes() {
   Forest* forest = new Forest(aspectRatio_);
+  SetupShader(forest, "shaders/basic_v.glsl", "shaders/basic_f.glsl");
+  forest->CreateModels();
   scenes_.push_back(forest);
+
+  Forest* forest2 = new Forest(aspectRatio_);
+  SetupShader(forest2, "shaders/basic_v.glsl", "shaders/basic_f.glsl");
+  forest2->CreateModels();
+  scenes_.push_back(forest2);
 
   currentScene_ = 0;
 }
 
-void SceneManager::LoadShaders() {
-  SetupShader(scenes_[currentScene_], "shaders/basic_v.glsl", "shaders/basic_f.glsl");
-  scenes_[currentScene_]->CreateModels();
-}
-
 void SceneManager::Render() {
-  scenes_[currentScene_]->Render();
+  if (currentScene_ >= 0 && currentScene_ < scenes_.size()) {
+    scenes_[currentScene_]->Render();
+  } else {
+    fprintf(stderr, "SceneManager[Render]: Scene %d is not exists\n", currentScene_);
+  }
 }
