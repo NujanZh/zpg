@@ -1,6 +1,7 @@
 #include "header/SceneManager.h"
 
 #include "scenes/Forest.h"
+#include "scenes/SphereLight.h"
 
 SceneManager::SceneManager(float aspectRatio) : currentScene_(-1), aspectRatio_(aspectRatio) {}
 
@@ -33,10 +34,10 @@ void SceneManager::CreateScenes() {
   forest->CreateModels();
   scenes_.push_back(forest);
 
-  Forest* forest2 = new Forest(aspectRatio_);
-  SetupShader(forest2, "shaders/basic_v.glsl", "shaders/basic_f.glsl");
-  forest2->CreateModels();
-  scenes_.push_back(forest2);
+  SphereLight* sphereLight = new SphereLight(aspectRatio_);
+  SetupShader(sphereLight, "shaders/spherelight.vert", "shaders/spherelight.frag");
+  sphereLight->CreateModels();
+  scenes_.push_back(sphereLight);
 
   currentScene_ = 0;
 }

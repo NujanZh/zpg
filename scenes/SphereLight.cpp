@@ -1,0 +1,42 @@
+#include "SphereLight.h"
+
+SphereLight::SphereLight(float aspectRatio) : Scene(aspectRatio) {  }
+
+void SphereLight::CreateModels() {
+  const int kSphereVertexCount = std::size(sphere) / 6;
+  std::vector spherePoints(sphere, sphere + kSphereVertexCount * 6);
+
+  float sphere_scale = 0.3f;
+  const std::vector<std::pair<float, float>> positions = {
+    {-3.0f, 0.0f},
+    {3.0f, 0.0f},
+    {0.0f, 3.0f},
+    {0.0f, -3.0f},
+  };
+
+  for (auto& [x, y] : positions) {
+    DrawableObject* sphereObj = new DrawableObject(spherePoints, kSphereVertexCount);
+
+    auto composite = std::make_shared<CompositeTransformation>();
+    composite->AddTransformation(std::make_shared<Scale>(sphere_scale, sphere_scale, sphere_scale));
+    composite->AddTransformation(std::make_shared<Translate>(x, y, 0.0f));
+
+    sphereObj->SetTransformation(composite);
+
+    AddDrawableObject(sphereObj);
+  }
+
+
+}
+
+void SphereLight::Render() {
+  if (!shaderProgram_) {
+    fprintf(stderr, "ERROR: Can't find shader program in Scene class!\n");
+    exit(EXIT_FAILURE);
+  }
+
+  shaderProgram_->SetShaderProgram();
+  for (auto drawableObject : drawableObjects_) {
+    drawableObject->Draw(shaderProgram_);
+  }
+}

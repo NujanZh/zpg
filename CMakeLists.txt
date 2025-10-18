@@ -40,6 +40,8 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         scenes/Forest.cpp
         scenes/Forest.h
         header/DynamicRotate.h
+        scenes/SphereLight.cpp
+        scenes/SphereLight.h
 )
 
 target_link_libraries(OpenGLProject

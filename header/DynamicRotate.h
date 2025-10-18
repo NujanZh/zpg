@@ -1,6 +1,5 @@
 #ifndef ZPG_DYNAMICROTATE_H
 #define ZPG_DYNAMICROTATE_H
-#include <glm/ext/quaternion_trigonometric.hpp>
 
 #include "Rotate.h"
 

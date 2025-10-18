@@ -5,6 +5,11 @@
 #include "DrawableObject.h"
 #include "ShaderProgram.h"
 #include "Shader.h"
+#include "../header/CompositeTransformation.h"
+#include "../header/Translate.h"
+#include "../header/Scale.h"
+#include "../header/Rotate.h"
+#include "../header/DynamicRotate.h"
 
 class Scene {
 protected:

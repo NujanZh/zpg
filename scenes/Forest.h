@@ -3,12 +3,8 @@
 
 
 #include "../header/Scene.h"
-#include "../header/Translate.h"
-#include "../header/Scale.h"
 #include "../Models/tree.h"
 #include "../Models/bushes.h"
-#include "../header/CompositeTransformation.h"
-#include "../header/DynamicRotate.h"
 
 class Forest : public Scene {
 

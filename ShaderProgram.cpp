@@ -34,7 +34,7 @@ void ShaderProgram::SetUniform(const char* name, const glm::mat4& matrix) {
   GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
-    fprintf(stderr, "Could not get uniform location for %s\n", name);
+    fprintf(stderr, "ShaderProgram[SetUniform]: Could not get uniform location for %s\n", name);
     return;
   }
 
@@ -45,7 +45,7 @@ void ShaderProgram::SetUniform(const char* name, const glm::vec3& vector) {
   GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
-    fprintf(stderr, "Could not get uniform location for %s\n", name);
+    fprintf(stderr, "ShaderProgram[SetUniform]: Could not get uniform location for %s\n", name);
     return;
   }
 
@@ -56,7 +56,7 @@ void ShaderProgram::SetUniform(const char* name, float value) {
   GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
-    fprintf(stderr, "Could not get uniform location for %s\n", name);
+    fprintf(stderr, "ShaderProgram[SetUniform]: Could not get uniform location for %s\n", name);
     return;
   }
 

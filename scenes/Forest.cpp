@@ -4,10 +4,10 @@
 Forest::Forest(float aspectRatio) : Scene(aspectRatio) {}
 
 void Forest::CreateModels() {
-  const int treeVertexCount = 92814;
+  const int treeVertexCount = std::size(tree) / 6;
   std::vector treePoints(tree, tree + treeVertexCount * 6);
 
-  const int bushVertexCount = 8730;
+  const int bushVertexCount = std::size(bushes) / 6;
   std::vector bushPoints(bushes, bushes + bushVertexCount * 6);
 
   const int numRows = 10;
