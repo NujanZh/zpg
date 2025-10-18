@@ -6,7 +6,7 @@ void CompositeTransformation::AddTransformation(std::shared_ptr<Transformation> 
   transformations_.push_back(transformation);
 }
 
-glm::mat4 CompositeTransformation::GetModelMatrix() {
+glm::mat4 CompositeTransformation::GetMatrix() {
   auto modelMatrix = glm::mat4(1.0f);
   for (const auto & transformation : std::ranges::reverse_view(transformations_)) {
     modelMatrix = transformation->GetMatrix() * modelMatrix;

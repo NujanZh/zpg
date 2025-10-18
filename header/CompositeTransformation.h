@@ -12,7 +12,7 @@ private:
   std::vector<std::shared_ptr<Transformation>> transformations_;
 public:
   void AddTransformation(std::shared_ptr<Transformation> transformation);
-  glm::mat4 GetModelMatrix();
+  glm::mat4 GetMatrix() override;
 };
 
 

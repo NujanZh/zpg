@@ -29,15 +29,15 @@ void Forest::CreateModels() {
         modelScale = bushScale;
       }
 
-      CompositeTransformation trans;
+      auto composite = std::make_shared<CompositeTransformation>();
 
       float xPos = (j - (numCols - 1) / 2.0f) * xSpacing;
       float zPos = (i - (numRows - 1) / 2.0f) * zSpacing;
 
-      trans.AddTransformation(std::make_shared<Translate>(xPos, 0.0f, -zPos));
-      trans.AddTransformation(std::make_shared<Scale>(modelScale, modelScale, modelScale));
+      composite->AddTransformation(std::make_shared<Translate>(xPos, 0.0f, -zPos));
+      composite->AddTransformation(std::make_shared<Scale>(modelScale, modelScale, modelScale));
 
-      obj->SetTransformation(trans);
+      obj->SetTransformation(composite);
       AddDrawableObject(obj);
     }
   }

@@ -9,7 +9,7 @@ protected:
   glm::mat4 matrix_;
 public:
   virtual ~Transformation() = default;
-  glm::mat4 GetMatrix() {
+  virtual glm::mat4 GetMatrix() {
     return this->matrix_;
   }
 };

@@ -7,6 +7,7 @@
 #include "../header/Scale.h"
 #include "../Models/tree.h"
 #include "../Models/bushes.h"
+#include "../header/CompositeTransformation.h"
 
 
 class Forest : public Scene {

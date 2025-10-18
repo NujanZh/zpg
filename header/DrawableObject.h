@@ -5,18 +5,18 @@
 #include <vector>
 #include "Model.h"
 #include "ShaderProgram.h"
-#include "CompositeTransformation.h"
+#include "Transformation.h"
 
 class DrawableObject {
 private:
   Model* model_;
-  CompositeTransformation transformation_;
+  std::shared_ptr<Transformation> transformation_;
 
 public:
   DrawableObject(std::vector<float> &points, int count);
   ~DrawableObject();
   void Draw(ShaderProgram* shaderProgram);
-  void SetTransformation(CompositeTransformation& transformation);
+  void SetTransformation(std::shared_ptr<Transformation> transformation);
 };
 
 #endif
