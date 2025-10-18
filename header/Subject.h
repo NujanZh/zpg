@@ -2,6 +2,7 @@
 #define SUBJECT_H
 #include <vector>
 
+#include "Observer.h"
 
 class Observer;
 class Subject {
@@ -14,8 +15,7 @@ public:
 
   // TODO: Create a method so views can delete observer if they detach
   void Detach(Observer* observer);
-
-  void Notify();
+  void Notify(SubjectEvent event, const EventData& data);
 };
 
 

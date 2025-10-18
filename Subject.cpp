@@ -9,8 +9,8 @@ void Subject::Detach(Observer* observer) {
   std::erase(views_, observer);
 }
 
-void Subject::Notify() {
+void Subject::Notify(SubjectEvent event, const EventData& data) {
   for (const auto kView : views_) {
-    kView->Update(this); // Now safe, as Observer is fully defined
+    kView->Update(event, data);
   }
 }

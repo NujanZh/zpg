@@ -11,6 +11,7 @@ ShaderProgram::ShaderProgram(Shader& vertexShader, Shader& fragmentShader, Camer
 
   if (camera_) {
     camera_->Attach(this);
+    camera_->InitializeObservers();
   }
 }
 
@@ -18,19 +19,19 @@ ShaderProgram::~ShaderProgram() {
   if (camera_) {
     camera_->Detach(this);
   }
-  glDeleteProgram(this->id_);
+  glDeleteProgram(id_);
 }
 
 bool ShaderProgram::SetShaderProgram() {
   if (id_) {
-    glUseProgram(this->id_);
+    glUseProgram(id_);
     return true;
   }
   return false;
 }
 
 void ShaderProgram::SetUniform(const char* name, const glm::mat4& matrix) {
-  GLint location = glGetUniformLocation(this->id_, name);
+  GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
     fprintf(stderr, "Could not get uniform location for %s\n", name);
@@ -41,7 +42,7 @@ void ShaderProgram::SetUniform(const char* name, const glm::mat4& matrix) {
 }
 
 void ShaderProgram::SetUniform(const char* name, const glm::vec3& vector) {
-  GLint location = glGetUniformLocation(this->id_, name);
+  GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
     fprintf(stderr, "Could not get uniform location for %s\n", name);
@@ -52,7 +53,7 @@ void ShaderProgram::SetUniform(const char* name, const glm::vec3& vector) {
 }
 
 void ShaderProgram::SetUniform(const char* name, float value) {
-  GLint location = glGetUniformLocation(this->id_, name);
+  GLint location = glGetUniformLocation(id_, name);
 
   if (location == -1) {
     fprintf(stderr, "Could not get uniform location for %s\n", name);
@@ -62,15 +63,19 @@ void ShaderProgram::SetUniform(const char* name, float value) {
   glUniform1f(location, value);
 }
 
-void ShaderProgram::Update(Subject* theChangedSubject) {
-  Camera* camera = dynamic_cast<Camera*>(theChangedSubject);
+void ShaderProgram::Update(SubjectEvent event, const EventData& data) {
+  glUseProgram(id_);
+  switch (event) {
+    case SubjectEvent::kCameraViewChanged:
+      SetUniform("view", std::get<glm::mat4>(data));
+      break;
 
-  if (camera) {
-    glUseProgram(this->id_);
-    SetUniform("view", camera->GetView());
-    SetUniform("projection", camera->GetProjection());
-  } else {
-    fprintf(stderr, "ERROR: Can't find camera in ShaderProgram class!\n");
-    exit(EXIT_FAILURE);
+    case SubjectEvent::kCameraProjectionChanged:
+      SetUniform("projection", std::get<glm::mat4>(data));
+      break;
+
+    case SubjectEvent::kCameraPositionChanged:
+      SetUniform("cameraPos", std::get<glm::vec3>(data));
+      break;
   }
 }

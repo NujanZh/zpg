@@ -8,7 +8,7 @@
 #include "../Models/tree.h"
 #include "../Models/bushes.h"
 #include "../header/CompositeTransformation.h"
-
+#include "../header/DynamicRotate.h"
 
 class Forest : public Scene {
 

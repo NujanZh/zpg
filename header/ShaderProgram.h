@@ -22,7 +22,7 @@ public:
   void SetUniform(const char* name, const glm::vec3& vector);
   void SetUniform(const char* name, float value);
 
-  void Update(Subject* theChangedSubject) override;
+  void Update(SubjectEvent event, const EventData& data) override;
 };
 
 #endif

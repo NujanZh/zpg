@@ -49,7 +49,7 @@ private:
     up_ = glm::normalize(glm::cross(right_, front_));
 
     view_ = glm::lookAt(position_, position_ + front_, up_);
-    Notify();
+    Notify(SubjectEvent::kCameraViewChanged, view_);
   }
 public:
 
@@ -73,6 +73,11 @@ public:
 
   float GetZoom() {
     return zoom_;
+  }
+
+  void InitializeObservers() {
+    Notify(SubjectEvent::kCameraViewChanged, view_);
+    Notify(SubjectEvent::kCameraProjectionChanged, projection_);
   }
 
   void ProcessKeyboard(Camera_Movement direction, float deltaTime);

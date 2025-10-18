@@ -39,6 +39,7 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         header/SceneManager.h
         scenes/Forest.cpp
         scenes/Forest.h
+        header/DynamicRotate.h
 )
 
 target_link_libraries(OpenGLProject
