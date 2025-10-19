@@ -7,12 +7,11 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-out vec4 worldPosition;
+out vec3 worldPosition;
 out vec3 worldNormal;
 
-
 void main(void){
-    gl_Position = (projection * view * model) * vec4(vp,1.0f);
-    worldPosition = model * vec4(vp,1.0f);
-    worldNormal = vn; //next lesson
+    gl_Position = projection * view * model * vec4(vp, 1.0f);
+    worldPosition = vec3(model * vec4(vp, 1.0f));
+    worldNormal = vn;
 }

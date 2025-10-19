@@ -7,7 +7,9 @@
 enum class SubjectEvent {
   kCameraViewChanged,
   kCameraProjectionChanged,
-  kCameraPositionChanged
+  kCameraPositionChanged,
+  kLightPositionChanged,
+  kLightColorChanged
 };
 
 using EventData = std::variant<glm::mat4, glm::vec3, float>;

@@ -1,6 +1,5 @@
 #include "Forest.h"
 
-
 Forest::Forest(float aspectRatio) : Scene(aspectRatio) {}
 
 void Forest::CreateModels() {
@@ -37,22 +36,9 @@ void Forest::CreateModels() {
 
       composite->AddTransformation(std::make_shared<Translate>(xPos, 0.0f, -zPos));
       composite->AddTransformation(std::make_shared<Scale>(modelScale, modelScale, modelScale));
-      composite->AddTransformation(std::make_shared<DynamicRotate>(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(1.0f)));
 
       obj->SetTransformation(composite);
       AddDrawableObject(obj);
     }
-  }
-}
-
-void Forest::Render() {
-  if (!shaderProgram_) {
-    fprintf(stderr, "ERROR: Can't find shader program in Scene class!\n");
-    exit(EXIT_FAILURE);
-  }
-
-  shaderProgram_->SetShaderProgram();
-  for (auto drawableObject : drawableObjects_) {
-    drawableObject->Draw(shaderProgram_);
   }
 }

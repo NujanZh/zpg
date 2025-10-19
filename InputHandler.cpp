@@ -46,6 +46,10 @@ void InputHandler::ProcessKeyInput(int key, int action) {
       scene_manager_->SwitchToScene(2);
       return;
     }
+    if (key == GLFW_KEY_4) {
+      scene_manager_->SwitchToScene(3);
+      return;
+    }
   }
 
   Scene* scene = scene_manager_->GetCurrentScene();

@@ -1,16 +1,14 @@
 #ifndef ZPG_FOREST_H
 #define ZPG_FOREST_H
 
-
-#include "../header/Scene.h"
-#include "../Models/tree.h"
-#include "../Models/bushes.h"
+#include "../../Models/bushes.h"
+#include "../../Models/tree.h"
+#include "../../header/Scene.h"
 
 class Forest : public Scene {
 
 public:
   void CreateModels() override;
-  void Render() override;
   Forest(float aspectRatio);
   ~Forest() = default;
 };

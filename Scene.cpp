@@ -1,6 +1,6 @@
 #include "header/Scene.h"
 
-Scene::Scene(float aspectRatio) : shaderProgram_(nullptr), camera_() {
+Scene::Scene(float aspectRatio) : shaderProgram_(nullptr), light_(nullptr), camera_() {
   camera_ = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, aspectRatio);
 }
 
@@ -22,9 +22,35 @@ void Scene::SetShaders(Shader vertex_shader, Shader fragment_shader) {
   }
 
   shaderProgram_ = new ShaderProgram(vertex_shader, fragment_shader, camera_);
+
+  if (light_) {
+    light_->Attach(shaderProgram_);
+    light_->InitalizeObservers();
+  }
+
   if (!shaderProgram_->SetShaderProgram()) {
     fprintf(stderr, "Failed to set shader program\n");
     exit(EXIT_FAILURE);
+  }
+}
+
+void Scene::Render() {
+  if (!shaderProgram_) {
+    fprintf(stderr, "ERROR: Can't find shader program in Scene class!\n");
+    exit(EXIT_FAILURE);
+  }
+
+  shaderProgram_->SetShaderProgram();
+  for (auto drawableObject : drawableObjects_) {
+    drawableObject->Draw(shaderProgram_);
+  }
+}
+
+void Scene::SetLight(Light* light) {
+  light_ = light;
+  if (shaderProgram_ && light_) {
+    light_->Attach(shaderProgram_);
+    light_->InitalizeObservers();
   }
 }
 

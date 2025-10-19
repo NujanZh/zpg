@@ -2,28 +2,35 @@
 #define SCENE_H
 
 #include <vector>
-#include "DrawableObject.h"
-#include "ShaderProgram.h"
-#include "Shader.h"
+
 #include "../header/CompositeTransformation.h"
-#include "../header/Translate.h"
-#include "../header/Scale.h"
-#include "../header/Rotate.h"
 #include "../header/DynamicRotate.h"
+#include "../header/Rotate.h"
+#include "../header/Scale.h"
+#include "../header/Translate.h"
+#include "DrawableObject.h"
+#include "Light.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 
 class Scene {
 protected:
   ShaderProgram* shaderProgram_;
   Camera* camera_;
+  Light* light_;
   std::vector<DrawableObject*> drawableObjects_;
 
 public:
   virtual void CreateModels() = 0;
-  virtual void Render() = 0;
+
   Scene(float aspectRatio);
   virtual ~Scene();
+
+  void Render();
+
   void SetShaders(Shader vertex_shader, Shader fragment_shader);
   void AddDrawableObject(DrawableObject* drawableObject);
+  void SetLight(Light* light);
   Camera* GetCamera();
 };
 

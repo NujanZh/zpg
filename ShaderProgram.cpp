@@ -9,6 +9,7 @@ ShaderProgram::ShaderProgram(Shader& vertexShader, Shader& fragmentShader, Camer
   vertexShader.AttachShaderToProgram(id_);
   glLinkProgram(id_);
 
+  // Maybe remove this code and just initialize a camera in Scene?
   if (camera_) {
     camera_->Attach(this);
     camera_->InitializeObservers();
@@ -77,5 +78,13 @@ void ShaderProgram::Update(SubjectEvent event, const EventData& data) {
     case SubjectEvent::kCameraPositionChanged:
       SetUniform("cameraPos", std::get<glm::vec3>(data));
       break;
+    case SubjectEvent::kLightPositionChanged:
+      SetUniform("lightPosition", std::get<glm::vec3>(data));
+      break;
+    case SubjectEvent::kLightColorChanged:
+      SetUniform("lightColor", std::get<glm::vec3>(data));
+      break;
+    default:
+      printf("ShaderProgram[Update]: Unknown event\n");
   }
 }

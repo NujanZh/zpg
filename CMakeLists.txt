@@ -37,11 +37,15 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         header/ShaderLoader.h
         SceneManager.cpp
         header/SceneManager.h
-        scenes/Forest.cpp
-        scenes/Forest.h
+        scenes/cv5/Forest.cpp
+        scenes/cv5/Forest.h
         header/DynamicRotate.h
-        scenes/SphereLight.cpp
-        scenes/SphereLight.h
+        scenes/cv5/SphereScene.cpp
+        scenes/cv5/SphereScene.h
+        Light.cpp
+        header/Light.h
+        scenes/cv5/TriangleScene.cpp
+        scenes/cv5/TriangleScene.h
 )
 
 target_link_libraries(OpenGLProject
