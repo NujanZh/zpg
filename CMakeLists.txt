@@ -48,6 +48,8 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         scenes/cv5/TriangleScene.h
         scenes/cv5/MultiShaderScene.cpp
         scenes/cv5/MultiShaderScene.h
+        scenes/cv5/SolarSystemScene.cpp
+        scenes/cv5/SolarSystemScene.h
 )
 
 target_link_libraries(OpenGLProject
