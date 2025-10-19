@@ -46,6 +46,8 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         header/Light.h
         scenes/cv5/TriangleScene.cpp
         scenes/cv5/TriangleScene.h
+        scenes/cv5/MultiShaderScene.cpp
+        scenes/cv5/MultiShaderScene.h
 )
 
 target_link_libraries(OpenGLProject

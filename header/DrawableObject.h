@@ -11,12 +11,14 @@ class DrawableObject {
 private:
   Model* model_;
   std::shared_ptr<Transformation> transformation_;
+  ShaderProgram* shaderProgram_; // Is it necessary?
 
 public:
   DrawableObject(std::vector<float> &points, int count);
   ~DrawableObject();
-  void Draw(ShaderProgram* shaderProgram);
+  void Draw(ShaderProgram* defaultShaderProgram);
   void SetTransformation(std::shared_ptr<Transformation> transformation);
+  void SetShaderProgram(ShaderProgram* shaderProgram);
 };
 
 #endif

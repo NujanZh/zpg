@@ -30,21 +30,13 @@ Scene* SceneManager::GetCurrentScene() {
 }
 
 void SceneManager::CreateScenes() {
-  Light* lambertLight = new Light(glm::vec3(0.0f, 0.0f, 1.0f));
-  Light* phongLight = new Light(glm::vec3(0.0f, 0.0f, 1.0f));
+  Light* lambertLight = new Light(glm::vec3(0.0f, 0.0f, 3.0f));
+  Light* phongLight = new Light(glm::vec3(10.0f, 10.0f, 10.0f));
 
-  /*
   TriangleScene* triangleScene = new TriangleScene(aspectRatio_);
   SetupShader(triangleScene, "shaders/constant.vert", "shaders/constant.frag");
   triangleScene->CreateModels();
   scenes_.push_back(triangleScene);
-  */
-
-  SphereScene* constantSphereScene = new SphereScene(aspectRatio_);
-  SetupShader(constantSphereScene, "shaders/constant.vert", "shaders/constant.frag");
-  constantSphereScene->CreateModels();
-  constantSphereScene->SetLight(lambertLight);
-  scenes_.push_back(constantSphereScene);
 
   SphereScene* lambertSphereScene = new SphereScene(aspectRatio_);
   SetupShader(lambertSphereScene, "shaders/lambert.vert", "shaders/lambert.frag");
@@ -52,24 +44,12 @@ void SceneManager::CreateScenes() {
   lambertSphereScene->SetLight(lambertLight);
   scenes_.push_back(lambertSphereScene);
 
-  SphereScene* phongSphereScene = new SphereScene(aspectRatio_);
-  SetupShader(phongSphereScene, "shaders/phong.vert", "shaders/phong.frag");
-  phongSphereScene->CreateModels();
-  phongSphereScene->SetLight(lambertLight);
-  scenes_.push_back(phongSphereScene);
-
-  SphereScene* blinnSphereScene = new SphereScene(aspectRatio_);
-  SetupShader(blinnSphereScene, "shaders/blinn.vert", "shaders/blinn.frag");
-  blinnSphereScene->CreateModels();
-  blinnSphereScene->SetLight(lambertLight);
-  scenes_.push_back(blinnSphereScene);
-  /*
   Forest* forestScene = new Forest(aspectRatio_);
   SetupShader(forestScene, "shaders/phong.vert", "shaders/phong.frag");
   forestScene->CreateModels();
   forestScene->SetLight(phongLight);
   scenes_.push_back(forestScene);
-*/
+
   currentScene_ = 0;
 }
 

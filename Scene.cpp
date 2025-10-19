@@ -8,6 +8,9 @@ Scene::~Scene() {
   for (auto drawableObject : drawableObjects_) {
     delete drawableObject;
   }
+  for (auto shader : additionalShaderPrograms_) {
+    delete shader;
+  }
   delete shaderProgram_;
   delete camera_;
 }
@@ -23,7 +26,8 @@ void Scene::SetShaders(Shader vertex_shader, Shader fragment_shader) {
 
   shaderProgram_ = new ShaderProgram(vertex_shader, fragment_shader, camera_);
 
-  if (light_) {
+  // TODO: Need to implement a better way, but somehow it work, so later
+  if (light_) { // because of this we need to add light and then shaders, otherwise it causes an error
     light_->Attach(shaderProgram_);
     light_->InitalizeObservers();
   }
@@ -32,6 +36,18 @@ void Scene::SetShaders(Shader vertex_shader, Shader fragment_shader) {
     fprintf(stderr, "Failed to set shader program\n");
     exit(EXIT_FAILURE);
   }
+}
+
+ShaderProgram* Scene::CreateAdditionalShaderProgram(Shader vertexShader, Shader fragmentShader) {
+  ShaderProgram* newShader = new ShaderProgram(vertexShader, fragmentShader, camera_);
+
+  if (light_) {
+    light_->Attach(newShader);
+    light_->InitalizeObservers();
+  }
+
+  additionalShaderPrograms_.push_back(newShader);
+  return newShader;
 }
 
 void Scene::Render() {
