@@ -5,6 +5,8 @@
 struct Light {
     vec3 position;
     vec3 color;
+    float shininess;
+    float intensity;
 };
 
 in vec4 worldPosition;
@@ -31,14 +33,13 @@ void main(void){
         vec3 lightDir = normalize(lights[i].position - worldPosition.xyz);
 
         float diff = max(dot(normal, lightDir), 0.0);
-        vec3 diffuse = diff * lights[i].color;
+        vec3 diffuse = diff * lights[i].color * lights[i].intensity;
         diffuseTotal += diffuse;
 
         vec3 reflectDir = reflect(-lightDir, normal);
-        float shininess = 32.0;
-        float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), lights[i].shininess);
         float specularStrength = 0.5;
-        vec3 specular = specularStrength * spec * lights[i].color;
+        vec3 specular = specularStrength * spec * lights[i].color * lights[i].intensity;
         specularTotal += specular;
     }
 

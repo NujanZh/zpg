@@ -109,6 +109,8 @@ int ShaderProgram::GetLightCount() {
 void ShaderProgram::AddLightSlot() {
   lightPositions_.push_back(glm::vec3(0.0f));
   lightColors_.push_back(glm::vec3(1.0f));
+  lightShininess_.push_back(32.0f);
+  lightIntensity_.push_back(1.0f);
 }
 
 void ShaderProgram::SetLightPosition(int index, const glm::vec3& position) {
@@ -127,6 +129,23 @@ void ShaderProgram::SetLightColor(int index, const glm::vec3& color) {
   }
 }
 
+void ShaderProgram::SetLightShininess(int index, float shininess) {
+  if (index >= 0 && index < lightShininess_.size()) {
+    lightShininess_[index] = shininess;
+  } else {
+    printf("ShaderProgram[SetLightShininess]: Light index %d is out of range\n", index);
+  }
+}
+
+void ShaderProgram::SetLightIntensity(int index, float intensity) {
+  if (index >= 0 && index < lightIntensity_.size()) {
+    lightIntensity_[index] = intensity;
+  } else {
+    printf("ShaderProgram[SetLightIntensity]: Light index %d is out of range\n", index);
+  }
+}
+
+
 void ShaderProgram::UpdateAllLights() {
   glUseProgram(id_);
 
@@ -136,12 +155,18 @@ void ShaderProgram::UpdateAllLights() {
   for (int i = 0; i < numberOfLights; i++) {
     char positionName[64];
     char colorName[64];
+    char shininessName[64];
+    char intensityName[64];
 
     snprintf(positionName, sizeof(positionName), "lights[%d].position", i);
     snprintf(colorName, sizeof(colorName), "lights[%d].color", i);
+    snprintf(shininessName, sizeof(shininessName), "lights[%d].shininess", i);
+    snprintf(intensityName, sizeof(intensityName), "lights[%d].intensity", i);
 
     SetUniform(positionName, lightPositions_[i]);
     SetUniform(colorName, lightColors_[i]);
+    SetUniform(shininessName, lightShininess_[i]);
+    SetUniform(intensityName, lightIntensity_[i]);
   }
 }
 

@@ -8,10 +8,12 @@ class Light : public Subject {
 private:
   glm::vec3 position_;
   glm::vec3 color_;
+  float shininess_;
+  float intensity_;
   int lightIndex_;
 
 public:
-  Light(const glm::vec3& position, const glm::vec3& color = glm::vec3(1.0f, 1.0f, 1.0f));
+  Light(const glm::vec3& position, const glm::vec3& color = glm::vec3(1.0f, 1.0f, 1.0f), float shininess = 32.0f, float intensity = 1.0f);
 
   void SetPosition(const glm::vec3& position);
   void SetColor(const glm::vec3& color);
@@ -21,6 +23,8 @@ public:
 
   glm::vec3 GetPosition() { return position_; }
   glm::vec3 GetColor() { return color_; }
+  float GetShininess() { return shininess_; }
+  float GetIntensity() { return intensity_; }
 };
 
 #endif

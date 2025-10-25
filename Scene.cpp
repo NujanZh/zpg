@@ -61,6 +61,8 @@ void Scene::UpdateLightsInShader() {
   for (int i = 0; i < lights_.size(); i++) {
     shaderProgram_->SetLightPosition(i, lights_[i]->GetPosition());
     shaderProgram_->SetLightColor(i, lights_[i]->GetColor());
+    shaderProgram_->SetLightShininess(i, lights_[i]->GetShininess());
+    shaderProgram_->SetLightIntensity(i, lights_[i]->GetIntensity());
   }
 
   shaderProgram_->UpdateAllLights();
