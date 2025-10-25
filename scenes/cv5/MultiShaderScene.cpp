@@ -27,7 +27,6 @@ const int kSphereVertexCount = std::size(sphere) / 6;
 
   float sphere_scale = 0.4f;
 
-  // 1. Constant модель (левая верхняя)
   DrawableObject* constantSphere = new DrawableObject(spherePoints, kSphereVertexCount);
   auto transConstant = std::make_shared<CompositeTransformation>();
   transConstant->AddTransformation(std::make_shared<Scale>(sphere_scale, sphere_scale, sphere_scale));
@@ -36,7 +35,6 @@ const int kSphereVertexCount = std::size(sphere) / 6;
   constantSphere->SetShaderProgram(constantShader_);
   AddDrawableObject(constantSphere);
 
-  // 2. Lambert модель (правая верхняя)
   DrawableObject* lambertSphere = new DrawableObject(spherePoints, kSphereVertexCount);
   auto transLambert = std::make_shared<CompositeTransformation>();
   transLambert->AddTransformation(std::make_shared<Scale>(sphere_scale, sphere_scale, sphere_scale));
@@ -45,7 +43,6 @@ const int kSphereVertexCount = std::size(sphere) / 6;
   lambertSphere->SetShaderProgram(lambertShader_);
   AddDrawableObject(lambertSphere);
 
-  // 3. Phong модель (левая нижняя)
   DrawableObject* phongSphere = new DrawableObject(spherePoints, kSphereVertexCount);
   auto transPhong = std::make_shared<CompositeTransformation>();
   transPhong->AddTransformation(std::make_shared<Scale>(sphere_scale, sphere_scale, sphere_scale));
@@ -54,7 +51,6 @@ const int kSphereVertexCount = std::size(sphere) / 6;
   phongSphere->SetShaderProgram(phongShader_);
   AddDrawableObject(phongSphere);
 
-  // 4. Blinn-Phong модель (правая нижняя)
   DrawableObject* blinnSphere = new DrawableObject(spherePoints, kSphereVertexCount);
   auto transBlinn = std::make_shared<CompositeTransformation>();
   transBlinn->AddTransformation(std::make_shared<Scale>(sphere_scale, sphere_scale, sphere_scale));

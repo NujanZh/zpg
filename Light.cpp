@@ -1,6 +1,6 @@
 #include "header/Light.h"
 
-Light::Light(const glm::vec3& position, const glm::vec3& color) : position_(position), color_(color) {}
+Light::Light(const glm::vec3& position, const glm::vec3& color) : position_(position), color_(color), lightIndex_(-1) {}
 
 void Light::SetPosition(const glm::vec3& position) {
   position_ = position;
@@ -12,7 +12,7 @@ void Light::SetColor(const glm::vec3& color) {
   Notify(SubjectEvent::kLightColorChanged, color_);
 }
 
-void Light::InitalizeObservers() {
+void Light::InitializeObservers() {
   Notify(SubjectEvent::kLightPositionChanged, position_);
   Notify(SubjectEvent::kLightColorChanged, color_);
 }

@@ -17,7 +17,7 @@ class Scene {
 protected:
   ShaderProgram* shaderProgram_;
   Camera* camera_;
-  Light* light_;
+  std::vector<Light*> lights_;
   std::vector<DrawableObject*> drawableObjects_;
   std::vector<ShaderProgram*> additionalShaderPrograms_;
 
@@ -32,7 +32,8 @@ public:
   ShaderProgram* CreateAdditionalShaderProgram(Shader vertexShader, Shader fragmentShader);
   void AddDrawableObject(DrawableObject* drawableObject);
   void SetShaders(Shader vertex_shader, Shader fragment_shader);
-  void SetLight(Light* light);
+  void AddLight(Light* light);
+  void UpdateLightsInShader();
   Camera* GetCamera();
 };
 

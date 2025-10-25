@@ -64,6 +64,17 @@ void ShaderProgram::SetUniform(const char* name, float value) {
   glUniform1f(location, value);
 }
 
+void ShaderProgram::SetUniform(const char* name, int value) {
+  GLint location = glGetUniformLocation(id_, name);
+
+  if (location == -1) {
+    fprintf(stderr, "ShaderProgram[SetUniform]: Could not get uniform location for %s\n", name);
+    return;
+  }
+
+  glUniform1i(location, value);
+}
+
 void ShaderProgram::Update(SubjectEvent event, const EventData& data) {
   glUseProgram(id_);
   switch (event) {
@@ -79,12 +90,58 @@ void ShaderProgram::Update(SubjectEvent event, const EventData& data) {
       SetUniform("cameraPos", std::get<glm::vec3>(data));
       break;
     case SubjectEvent::kLightPositionChanged:
-      SetUniform("lightPosition", std::get<glm::vec3>(data));
+      //SetUniform("lightPosition", std::get<glm::vec3>(data));
+      UpdateAllLights();
       break;
     case SubjectEvent::kLightColorChanged:
-      SetUniform("lightColor", std::get<glm::vec3>(data));
+      //SetUniform("lightColor", std::get<glm::vec3>(data));
+      UpdateAllLights();
       break;
     default:
       printf("ShaderProgram[Update]: Unknown event\n");
   }
 }
+
+int ShaderProgram::GetLightCount() {
+  return lightPositions_.size();
+}
+
+void ShaderProgram::AddLightSlot() {
+  lightPositions_.push_back(glm::vec3(0.0f));
+  lightColors_.push_back(glm::vec3(1.0f));
+}
+
+void ShaderProgram::SetLightPosition(int index, const glm::vec3& position) {
+  if (index >= 0 && index < lightPositions_.size()) {
+    lightPositions_[index] = position;
+  } else {
+    printf("ShaderProgram[SetLightPosition]: Light index %d is out of range\n", index);
+  }
+}
+
+void ShaderProgram::SetLightColor(int index, const glm::vec3& color) {
+  if (index >= 0 && index < lightColors_.size()) {
+    lightColors_[index] = color;
+  } else {
+    printf("ShaderProgram[SetLightColor]: Light index %d is out of range\n", index);
+  }
+}
+
+void ShaderProgram::UpdateAllLights() {
+  glUseProgram(id_);
+
+  int numberOfLights = std::min(static_cast<int>(lightPositions_.size()), 4);
+  SetUniform("numberOfLights", numberOfLights);
+
+  for (int i = 0; i < numberOfLights; i++) {
+    char positionName[64];
+    char colorName[64];
+
+    snprintf(positionName, sizeof(positionName), "lights[%d].position", i);
+    snprintf(colorName, sizeof(colorName), "lights[%d].color", i);
+
+    SetUniform(positionName, lightPositions_[i]);
+    SetUniform(colorName, lightColors_[i]);
+  }
+}
+

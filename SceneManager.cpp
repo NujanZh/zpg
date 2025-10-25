@@ -4,6 +4,7 @@
 #include "scenes/cv5/SolarSystemScene.h"
 //#include "scenes/cv5/SphereScene.h"
 #include "scenes/cv5/TriangleScene.h"
+#include "scenes/cv6/SuziScene.h"
 
 SceneManager::SceneManager(float aspectRatio) : currentScene_(-1), aspectRatio_(aspectRatio) {}
 
@@ -31,34 +32,15 @@ Scene* SceneManager::GetCurrentScene() {
 }
 
 void SceneManager::CreateScenes() {
-  Light* lambertLight = new Light(glm::vec3(0.0f, 0.0f, 3.0f));
-  Light* phongLight = new Light(glm::vec3(10.0f, 10.0f, 10.0f));
-  Light* solarLight = new Light(glm::vec3(0.0f, 0.0f, 0.0f));
+  SuziScene* suziScene = new SuziScene(aspectRatio_);
+  SetupShader(suziScene, "shaders/phong.vert", "shaders/phong.frag");
 
-  TriangleScene* triangleScene = new TriangleScene(aspectRatio_);
-  SetupShader(triangleScene, "shaders/constant.vert", "shaders/constant.frag");
-  triangleScene->CreateModels();
-  scenes_.push_back(triangleScene);
+  Light* light1 = new Light(glm::vec3(10.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));  // Červené
 
-  /*
-  SphereScene* lambertSphereScene = new SphereScene(aspectRatio_);
-  SetupShader(lambertSphereScene, "shaders/lambert.vert", "shaders/lambert.frag");
-  lambertSphereScene->CreateModels();
-  lambertSphereScene->SetLight(lambertLight);
-  scenes_.push_back(lambertSphereScene);
-  */
+  suziScene->AddLight(light1);
 
-  Forest* forestScene = new Forest(aspectRatio_);
-  SetupShader(forestScene, "shaders/phong.vert", "shaders/phong.frag");
-  forestScene->CreateModels();
-  forestScene->SetLight(phongLight);
-  scenes_.push_back(forestScene);
-
-  SolarSystemScene* solarSystemScene = new SolarSystemScene(aspectRatio_);
-  SetupShader(solarSystemScene, "shaders/blinn.vert", "shaders/blinn.frag");
-  solarSystemScene->CreateModels();
-  solarSystemScene->SetLight(solarLight);
-  scenes_.push_back(solarSystemScene);
+  suziScene->CreateModels();
+  scenes_.push_back(suziScene);
 
   currentScene_ = 0;
 }
