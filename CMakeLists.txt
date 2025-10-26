@@ -52,6 +52,10 @@ add_executable(OpenGLProject ../zpg_project/main.cpp
         scenes/cv5/SolarSystemScene.h
         scenes/cv6/SuziScene.cpp
         scenes/cv6/SuziScene.h
+        scenes/cv6/RedSphereScene.cpp
+        scenes/cv6/RedSphereScene.h
+        scenes/cv6/LightWrongPositionScene.cpp
+        scenes/cv6/LightWrongPositionScene.h
 )
 
 target_link_libraries(OpenGLProject

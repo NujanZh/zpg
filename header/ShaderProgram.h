@@ -15,6 +15,7 @@ private:
 
   std::vector<glm::vec3> lightPositions_;
   std::vector<glm::vec3> lightColors_;
+  std::vector<glm::vec3> lightDiffuses_;
 
 public:
 
@@ -32,6 +33,7 @@ public:
   int GetLightCount();
   void SetLightPosition(int index, const glm::vec3& position);
   void SetLightColor(int index, const glm::vec3& color);
+  void SetLightDiffuse(int index, const glm::vec3& diffuse);
   void AddLightSlot();
 };
 

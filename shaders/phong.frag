@@ -5,6 +5,7 @@
 struct Light {
     vec3 position;
     vec3 color;
+    vec3 diffuse;
 };
 
 in vec4 worldPosition;
@@ -16,12 +17,17 @@ uniform int numberOfLights;
 
 out vec4 outColor;
 
+float att(float d, float c, float l, float q) {
+    float attenuation = 1.0 / (c + l * d+ q * d * d);
+    return clamp(attenuation, 0.0f, 1.0f);
+}
+
 void main(void){
     vec3 objectColor = vec3(0.385, 0.647, 0.812);
     vec3 normal = normalize(worldNormal);
     vec3 viewDir = normalize(cameraPos - worldPosition.xyz);
 
-    float ambientStrength = 0.1;
+    float ambientStrength = 0.05;
     vec3 ambient = ambientStrength * vec3(1.0);
 
     vec3 diffuseTotal = vec3(0.0);
@@ -29,16 +35,22 @@ void main(void){
 
     for(int i = 0; i < numberOfLights; i++) {
         vec3 lightDir = normalize(lights[i].position - worldPosition.xyz);
+        float distance = length(lights[i].position - worldPosition.xyz);
+
+        float constant = 1.0;
+        float linear = 0.7;
+        float quadratic = 1.8;
+        float attenuation = att(distance, constant, linear, quadratic);
 
         float diff = max(dot(normal, lightDir), 0.0);
-        vec3 diffuse = diff * lights[i].color;
+        vec3 diffuse = diff * lights[i].diffuse * attenuation;
         diffuseTotal += diffuse;
 
         vec3 reflectDir = reflect(-lightDir, normal);
         float shininess = 32.0;
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
         float specularStrength = 0.5;
-        vec3 specular = specularStrength * spec * lights[i].color;
+        vec3 specular = specularStrength * spec * lights[i].color * attenuation;
         specularTotal += specular;
     }
 

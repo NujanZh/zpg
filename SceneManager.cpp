@@ -1,9 +1,11 @@
 #include "header/SceneManager.h"
 
 #include "scenes/cv5/Forest.h"
-#include "scenes/cv5/SolarSystemScene.h"
+//#include "scenes/cv5/SolarSystemScene.h"
 //#include "scenes/cv5/SphereScene.h"
 #include "scenes/cv5/TriangleScene.h"
+#include "scenes/cv6/RedSphereScene.h"
+//#include "scenes/cv6/LightWrongPositionScene.h"
 #include "scenes/cv6/SuziScene.h"
 
 SceneManager::SceneManager(float aspectRatio) : currentScene_(-1), aspectRatio_(aspectRatio) {}
@@ -32,15 +34,61 @@ Scene* SceneManager::GetCurrentScene() {
 }
 
 void SceneManager::CreateScenes() {
-  SuziScene* suziScene = new SuziScene(aspectRatio_);
-  SetupShader(suziScene, "shaders/phong.vert", "shaders/phong.frag");
+  Forest* forestScene = new Forest(aspectRatio_);
+  SetupShader(forestScene, "shaders/phong.vert", "shaders/phong.frag");
 
-  Light* light1 = new Light(glm::vec3(10.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));  // Červené
+  Light* firefly1 = new Light(
+    glm::vec3(0.0f, 0.3f, -0.5f),
+    glm::vec3(1.0f, 1.0f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 0.0f)
+  );
 
-  suziScene->AddLight(light1);
+  Light* firefly2 = new Light(
+    glm::vec3(1.0f, 0.3f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 0.0f)
+  );
 
-  suziScene->CreateModels();
-  scenes_.push_back(suziScene);
+  Light* firefly3 = new Light(
+    glm::vec3(-1.0f, 0.3f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 1.0f),
+    glm::vec3(1.0f, 1.0f, 0.0f)
+  );
+
+
+  forestScene->AddLight(firefly1);
+  forestScene->AddLight(firefly2);
+  forestScene->AddLight(firefly3);
+
+  forestScene->CreateModels();
+  scenes_.push_back(forestScene);
+
+  RedSphereScene* red_sphere_scene = new RedSphereScene(aspectRatio_);
+  SetupShader(red_sphere_scene, "shaders/RedSphere.vert", "shaders/RedSphere.frag");
+
+  Light* red_sphere_light = new Light(
+      glm::vec3(0.0f, 0.0f, 1.5f),
+      glm::vec3(5.0f, 5.0f, 5.0f),
+      glm::vec3(3.0f, 0.0f, 0.0f)
+  );
+
+  red_sphere_scene->AddLight(red_sphere_light);
+  red_sphere_scene->CreateModels();
+  scenes_.push_back(red_sphere_scene);
+
+  /*
+  LightWrongPositionScene* wrong_light_scene = new LightWrongPositionScene(aspectRatio_);
+  SetupShader(wrong_light_scene, "shaders/RedSphere.vert", "shaders/RedSphere.frag");
+  wrong_light_scene->CreateModels();
+
+  Light* wrong_light = new Light(
+    glm::vec3(0.0f, 0.0f, -5.0f),
+    glm::vec3(5.0f, 5.0f, 5.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f)
+  );
+  wrong_light_scene->AddLight(wrong_light);
+  scenes_.push_back(wrong_light_scene);
+  */
 
   currentScene_ = 0;
 }

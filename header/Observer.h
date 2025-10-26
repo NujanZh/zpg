@@ -3,16 +3,25 @@
 
 #include <variant>
 #include <glm/fwd.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 enum class SubjectEvent {
   kCameraViewChanged,
   kCameraProjectionChanged,
   kCameraPositionChanged,
   kLightPositionChanged,
-  kLightColorChanged
+  kLightColorChanged,
+  kLightDiffuseChanged,
+  kLightFullUpdate
 };
 
-using EventData = std::variant<glm::mat4, glm::vec3, float>;
+struct LightData {
+  int index;
+  glm::vec3 value;
+};
+
+using EventData = std::variant<glm::mat4, glm::vec3, float, LightData>;
 
 class Subject;
 class Observer {
