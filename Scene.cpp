@@ -117,3 +117,10 @@ void Scene::AddLight(Light* light) {
 Camera* Scene::GetCamera() {
   return camera_;
 }
+
+void Scene::UpdateCameraPerspective(float aspectRatio) {
+  if (camera_) {
+    camera_->SetAspectRatio(aspectRatio);
+  }
+}
+

@@ -49,8 +49,10 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
 
 void Camera::ProcessMouseScroll(float yoffset) {
   zoom_ -= yoffset;
+
   if (zoom_ < 1.0f) zoom_ = 1.0f;
   if (zoom_ > 45.0f) zoom_ = 45.0f;
+
   projection_ = glm::perspective(glm::radians(zoom_), projection_[1][1] / projection_[0][0], 0.1f, 100.0f);
   Notify(SubjectEvent::kCameraProjectionChanged, projection_);
 }

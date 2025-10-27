@@ -80,6 +80,11 @@ public:
     Notify(SubjectEvent::kCameraProjectionChanged, projection_);
   }
 
+  void SetAspectRatio(float aspect) {
+    projection_ = glm::perspective(glm::radians(zoom_), aspect, 0.1f, 100.0f);
+    Notify(SubjectEvent::kCameraProjectionChanged, projection_);
+  }
+
   void ProcessKeyboard(Camera_Movement direction, float deltaTime);
   void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
   void ProcessMouseScroll(float yoffset);

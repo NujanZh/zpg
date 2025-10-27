@@ -42,21 +42,17 @@ void main(void){
         diffuseTotal += diffuse;
 
         if (diff > 0.0)  {
-            // Динамический shininess
             float minShininess = 4.0;
             float maxShininess = 64.0;
             float shininessRange = 1.5;
             float shininessFactor = clamp(1.0 - (distance / shininessRange), 0.0, 1.0);
             float shininess = mix(minShininess, maxShininess, shininessFactor);
-            // Specular с усиленным затуханием
+
             vec3 reflectDir = reflect(-lightDir, normal);
             float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
 
-            // Specular затухает быстрее
             float specularAttenuation = pow(attenuation, 1.5);
-            // Степенное затухание
 
-            // Увеличиваем интенсивность specular вблизи
             float specularStrength = 0.5 * (1.0 + shininessFactor * 0.5);
             vec3 specular = specularStrength * spec * lights[i].color * specularAttenuation;
             specularTotal += specular;

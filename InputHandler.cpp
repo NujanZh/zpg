@@ -123,13 +123,13 @@ void InputHandler::WindowSizeCallback(GLFWwindow* window, int width, int height)
   glViewport(0, 0, width, height);
 
   InputHandler* handler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
-  if (handler && handler->scene_manager_) {
+
+  if (handler && handler->scene_manager_ && height > 0) {
+    float newAspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
     Scene* scene = handler->scene_manager_->GetCurrentScene();
     if (scene) {
-      Camera* camera = scene->GetCamera();
-      if (camera) {
-        camera->ProcessMouseScroll(0.0f);
-      }
+        scene->UpdateCameraPerspective(newAspectRatio);
     }
   }
 }

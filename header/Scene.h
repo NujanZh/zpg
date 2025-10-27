@@ -34,6 +34,7 @@ public:
   void SetShaders(Shader vertex_shader, Shader fragment_shader);
   void AddLight(Light* light);
   void UpdateLightsInShader();
+  void UpdateCameraPerspective(float aspectRatio);
   Camera* GetCamera();
 };
 
